@@ -4,36 +4,24 @@ import axios from "axios";
 import React from "react";
 
 export const Grid = ({ users, setUsers, setOnEdit }) => {
-  const handleEdit = (item) => {
-    setOnEdit(item);
-  };
+  // const handleEdit = (item) => {
+  //   setOnEdit(item);
+  // };
 
-  const handleDelete = async (id) => {
-    await axios
-      .delete(`http://localhost:3001/${id}`)
-      .then(({ data }) => {
-        const newArray = users.filter((user) => user.id !== id);
+  // const handleDelete = async (id) => {
+  //   await axios
+  //     .delete(`http://localhost:3001/${id}`)
+  //     .then((res) => {
+  //       const newArray = users.filter((user) => user.id !== id);
 
-        setUsers(newArray);
-        Toast({
-          title: "Usuário deletado com sucesso",
-          description: data,
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-        });
-      })
-      .catch(({ data }) => {
-        return Toast({
-          title: "Erro ao deletar usuário",
-          description: data,
-          status: "error",
-          duration: 2000,
-          isClosable: true,
-        });
-      });
-  };
-
+  //       setUsers(newArray);
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  console.log(users);
   return (
     <Flex>
       <Table>

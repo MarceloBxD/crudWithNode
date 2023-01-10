@@ -6,16 +6,16 @@ export const Form = ({ onEdit, setOnEdit, getUsers }) => {
   const ref = useRef();
   const toast = useToast();
 
-  useEffect(() => {
-    if (onEdit) {
-      const user = ref.current;
+  // useEffect(() => {
+  //   if (onEdit) {
+  //     const user = ref.current;
 
-      user.nome.value = onEdit.nome;
-      user.email.value = onEdit.email;
-      user.fone.value = onEdit.fone;
-      user.data_nascimento.value = onEdit.data_nascimento;
-    }
-  }, [onEdit]);
+  //     user.nome.value = onEdit.nome;
+  //     user.email.value = onEdit.email;
+  //     user.fone.value = onEdit.fone;
+  //     user.data_nascimento.value = onEdit.data_nascimento;
+  //   }
+  // }, [onEdit]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,61 +35,37 @@ export const Form = ({ onEdit, setOnEdit, getUsers }) => {
         duration: 2000,
         isClosable: true,
       });
-    } else {
-      if (onEdit) {
-        await axios
-          .put(`http://localhost:3001/${onEdit.id}`, {
-            nome: user.nome.value,
-            email: user.email.value,
-            fone: user.fone.value,
-            data_nascimento: user.data_nascimento.value,
-          })
-          .then(() => {
-            toast({
-              title: "Usuário sofreu alterações",
-              message: "Dados atualizados com sucesso",
-              status: "success",
-              duration: 2000,
-              isClosable: true,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            toast({
-              title: "Erro ao editar usuário",
-              status: "error",
-              description: err,
-              duration: 2000,
-              isClosable: true,
-            });
-          });
-      } else {
-        await axios
-          .post(`http://localhost:3001`, {
-            nome: user.nome.value,
-            email: user.email.value,
-            fone: user.fone.value,
-            data_nascimento: user.data_nascimento.value,
-          })
-          .then((response) => {
-            toast({
-              title: "Usuário cadastrado com sucesso",
-              description: response.data,
-              status: "success",
-              duration: 2000,
-              isClosable: true,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            toast({
-              title: "Erro ao cadastrar usuário",
-              status: "error",
-              duration: 2000,
-              isClosable: true,
-            });
-          });
-      }
+    }
+    //  else {
+    // if (onEdit) {
+    //   await axios
+    //     .put(`http://localhost:3001/${onEdit.id}`, {
+    //       nome: user.nome.value,
+    //       email: user.email.value,
+    //       fone: user.fone.value,
+    //       data_nascimento: user.data_nascimento.value,
+    //     })
+    //     .then((response) => {
+    //       console.log(response);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
+    else {
+      await axios
+        .post(`http://localhost:3001`, {
+          nome: user.nome.value,
+          email: user.email.value,
+          fone: user.fone.value,
+          data_nascimento: user.data_nascimento.value,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     user.nome.value = "";
     user.email.value = "";
@@ -102,6 +78,7 @@ export const Form = ({ onEdit, setOnEdit, getUsers }) => {
 
   return (
     <form
+      onSubmit={handleSubmit}
       style={{
         padding: "20px",
         boxShadow: "10px 5px 5px 1px rgba(0, 0, 0, 0.2)",
@@ -110,7 +87,6 @@ export const Form = ({ onEdit, setOnEdit, getUsers }) => {
         width: "800px",
       }}
       ref={ref}
-      onSubmit={handleSubmit}
     >
       <Flex p="15px" align="center" gap="20px" borderRadius="10px">
         <Flex flexDir="column">

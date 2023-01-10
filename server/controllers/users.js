@@ -11,7 +11,7 @@ const db = mysql.createConnection({
 
 // Creating a query to get all users
 
-const getUser = (_, res) => {
+const getUsers = (_, res) => {
   const q = "SELECT * FROM users";
 
   db.query(q, (err, result) => {
@@ -22,50 +22,56 @@ const getUser = (_, res) => {
   });
 };
 
-const addUser = (req, res) => {
-  const q =
-    "INSERT INTO users ('nome', 'email', 'fone', 'data_nascimento') VALUES (?)";
+// Creating a query to add an user
 
-  const values = [
-    req.body.nome,
-    req.body.email,
-    req.body.fone,
-    req.body.data_nascimento,
-  ];
+// const addUser = (req, res) => {
+//   const q =
+//     "INSERT INTO users ('nome', 'email', 'fone', 'data_nascimento') VALUES (?)";
 
-  db.query(q, [values], (err) => {
-    if (err) res.json(err);
+//   const values = [
+//     req.body.nome,
+//     req.body.email,
+//     req.body.fone,
+//     req.body.data_nascimento,
+//   ];
 
-    return res.status(200).json("Usuário adicionado com sucesso!");
-  });
-};
+//   db.query(q, [values], (err) => {
+//     if (err) res.json(err);
 
-const updateUser = (req, res) => {
-  const q =
-    "UPDATE users SET 'nome' = ?, 'email' = ?, 'fone' = ?, 'data_nascimento' = ? WHERE 'id' = ?";
-  const values = [
-    req.body.nome,
-    req.body.email,
-    req.body.fone,
-    req.body.data_nascimento,
-  ];
+//     return res.status(200).json("Usuário adicionado com sucesso!");
+//   });
+// };
 
-  db.query(q, [...values, req.params.id], (err) => {
-    if (err) return res.json(err);
+// Creating a function to update the existent users
 
-    return res.status(200).json("Usuário atualizado com sucesso!");
-  });
-};
+// export const updateUser = (req, res) => {
+//   const q =
+//     "UPDATE users SET 'nome' = ?, 'email' = ?, 'fone' = ?, 'data_nascimento' = ? WHERE 'id' = ?";
+//   const values = [
+//     req.body.nome,
+//     req.body.email,
+//     req.body.fone,
+//     req.body.data_nascimento,
+//   ];
 
-const deleteUser = (req, res) => {
-  const q = "DELETE FROM users WHERE 'id' = ?";
+//   db.query(q, [...values, req.params.id], (err) => {
+//     if (err) return res.json(err);
 
-  db.query(q, [req.params.id], (err) => {
-    if (err) return res.json(err);
+//     return res.status(200).json("Usuário atualizado com sucesso!");
+//   });
+// };
 
-    return res.status(200).json("Usuário deletado com sucesso!");
-  });
-};
+// Creating a function to delete existeting users
+
+// export const deleteUser = (req, res) => {
+//   const q = "DELETE FROM users WHERE 'id' = ?";
+
+//   db.query(q, [req.params.id], (err) => {
+//     if (err) return res.json(err);
+
+//     return res.status(200).json("Usuário deletado com sucesso!");
+//   });
+// };
 
 // exportar as funções para serem usadas em outro arquivo
-module.exports = { getUser, addUser, updateUser, deleteUser };
+module.exports = getUsers;
